@@ -3,27 +3,35 @@ import './scss/app.scss';
 import Header from './components/Header'
 import Categories from './components/Categories';
 import Sort from './components/Sort';
-import PizzaBlock from './components/PizzaBlock';
+import ClothesBlock from './components/ClothesBlock';
+
+import clothes from './assets/blank_clothes.json'
 
 
 function App() {
   return (
     <>
       <div className="App">
-        <div class="wrapper">
+        <div className="wrapper">
           <Header />
-          <div class="content">
-            <div class="container">
-              <div class="content__top">
-                <Categories />
+          <div className="content">
+            <div className="container">
+              <div className="content__top">
+                {/* <Categories /> */}
                 <Sort />
               </div>
-              <h2 class="content__title">Все пиццы</h2>
-              <div class="content__items">
-                <PizzaBlock title="Мексиканская" price={500} />
-                <PizzaBlock title="чили" price="200" />
-                <PizzaBlock title="Мексиканская" price="140" />
-                <PizzaBlock title="Мексиканская" price="0" />
+              <h2 className="content__title">Усі</h2>
+              <div className="content__items">
+                {
+                  clothes.map(obj => (
+                    <ClothesBlock key={obj.id}
+                    title={obj.title + " " + obj.color} 
+                    price={obj.price} 
+                    link={obj.link} 
+                    brand={obj.brand} 
+                    sizes={obj.size} />
+                  ))
+                }
               </div>
             </div>
           </div>
