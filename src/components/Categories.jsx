@@ -7,7 +7,7 @@ export default function Categories() {
         setActiveCategory(index)
     }
 
-    const categories = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]
+    const categories = ["Усі", "Худі", "Світшоти", "Футболки"]
 
     return (
         <div className="categories">

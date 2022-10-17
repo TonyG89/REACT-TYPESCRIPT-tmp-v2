@@ -1,4 +1,4 @@
-@import '../variables';
+@import "../variables";
 
 .header {
   border-bottom: 1px solid $gray-line;
@@ -12,21 +12,61 @@
 
   &__logo {
     display: flex;
+    align-items: center;
 
     img {
       margin-right: 15px;
+      height: 100%;
     }
-
+    .title {
+      align-items: center;
+    }
     h1 {
       color: #181818;
       font-size: 24px;
-      letter-spacing: 1%;
       text-transform: uppercase;
       font-weight: 800;
+      padding-top: 20px;
     }
 
     p {
       color: #7b7b7b;
+    }
+  }
+
+  @media (max-width: 800px) {
+    padding: 20px 0;
+
+    .container {
+      flex-direction: column;
+    }
+    .header__cart {
+      padding-top: 30px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    h1 {
+      font-size: 16px;
+    }
+    p {
+      text-align: center;
+      font-size: 12px;
+    }
+    .button span {
+      font-size: 12px;
+    }
+    .button--cart svg {
+      width: 14px;
+    }
+  }
+  @media (max-width: 420px) {
+    .header__logo {
+      flex-direction: column;
+    }
+    img {
+      margin: 0;
+      width: 100px;
     }
   }
 }

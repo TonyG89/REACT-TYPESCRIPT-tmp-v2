@@ -11,9 +11,9 @@ import ContentLoader from "react-content-loader"
     foregroundColor="#fcbb97"
     {...props}
   >
-    <rect x="10" y="5" rx="10" ry="10" width="260" height="300" />
-    <rect x="50" y="315" rx="10" ry="10" width="180" height="32" /> 
-    <rect x="0" y="355" rx="10" ry="10" width="280" height="88" /> 
+    <rect x="30" y="20" rx="10" ry="10" width="240" height="300" />
+    <rect x="50" y="325" rx="10" ry="10" width="180" height="32" /> 
+    <rect x="0" y="365" rx="10" ry="10" width="280" height="88" /> 
     <rect x="0" y="466" rx="10" ry="10" width="95" height="35" /> 
     <rect x="125" y="461" rx="24" ry="24" width="152" height="45" />
   </ContentLoader>
