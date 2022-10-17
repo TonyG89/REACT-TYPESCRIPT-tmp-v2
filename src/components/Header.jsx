@@ -1,19 +1,21 @@
 import logo from '../assets/img/tmp-logo.png'
+import {Link} from 'react-router-dom';
 
 const Header = () => {
     return (
         <>
             <header className="header">
                 <div className="container">
-                    <div className="header__logo">
-                        <img width="38" src={"/img/pizza-logo.svg" && logo} alt="Pizza logo" />
+                <Link to="/"><div className="header__logo">
+                       <img width="50" src={logo} alt="TMPrint logo" />
+                        
                         <div>
                             <h1>Too Much Blank Clothes</h1>
                             <p>Дешевий та якісний бланковий одяг</p>
                         </div>
-                    </div>
+                    </div></Link>
                     <div className="header__cart">
-                        <a href="/cart.html" className="button button--cart">
+                        <Link to="/cartvccx.html" className="button button--cart">
                             <span>520 ₽</span>
                             <div className="button__delimiter"></div>
                             <svg
@@ -46,7 +48,7 @@ const Header = () => {
                                 />
                             </svg>
                             <span>3</span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </header>

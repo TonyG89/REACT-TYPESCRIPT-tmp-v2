@@ -1,22 +1,22 @@
 import React from "react"
 import ContentLoader from "react-content-loader"
 
-const MyLoader = (props) => (
+ const Skeleton = (props) => (
   <ContentLoader 
     speed={1}
     width={280}
     height={500}
-    viewBox="0 0 280 500"
+    viewBox="0 0 280 505"
     backgroundColor="#f3f3f3"
-    foregroundColor="#ff7e38"
+    foregroundColor="#fcbb97"
     {...props}
   >
-    <circle cx="138" cy="138" r="138" /> 
-    <rect x="0" y="296" rx="10" ry="10" width="280" height="32" /> 
-    <rect x="0" y="345" rx="10" ry="10" width="280" height="88" /> 
-    <rect x="0" y="455" rx="10" ry="10" width="95" height="30" /> 
-    <rect x="125" y="446" rx="24" ry="24" width="152" height="45" />
+    <rect x="10" y="5" rx="10" ry="10" width="260" height="300" />
+    <rect x="50" y="315" rx="10" ry="10" width="180" height="32" /> 
+    <rect x="0" y="355" rx="10" ry="10" width="280" height="88" /> 
+    <rect x="0" y="466" rx="10" ry="10" width="95" height="35" /> 
+    <rect x="125" y="461" rx="24" ry="24" width="152" height="45" />
   </ContentLoader>
 )
 
-export default MyLoader
+export default Skeleton

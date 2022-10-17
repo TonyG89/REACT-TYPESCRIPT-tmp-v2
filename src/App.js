@@ -1,21 +1,16 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import './scss/app.scss';
+
 import Header from './components/Header'
-import Categories from './components/Categories';
-import Sort from './components/Sort';
-import ClothesBlock from './components/ClothesBlock/ClothesBlock';
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
+import Cart from './pages/Cart';
 
 // import clothes from './assets/blank_clothes.json'
 
 
 function App() {
-
-  const [clothes, setClothes] = React.useState([])
-React.useEffect(()=>{
-  fetch("https://630927d6722029d9dddf3c35.mockapi.io/blank_clothes")
-    .then((res) => res.json())
-    .then(arr => setClothes(arr))
-}, [])
 
   return (
     <>
@@ -24,23 +19,11 @@ React.useEffect(()=>{
           <Header />
           <div className="content">
             <div className="container">
-              <div className="content__top">
-                <Categories />
-                <Sort />
-              </div>
-              <h2 className="content__title">Усі</h2>
-              <div className="content__items">
-                {
-                  clothes.map(obj => (
-                    <ClothesBlock key={obj.id}
-                      title={obj.title + " " + obj.color}
-                      price={obj.price}
-                      link={obj.link}
-                      brand={obj.brand}
-                      sizes={obj.size} />
-                  ))
-                }
-              </div>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
             </div>
           </div>
         </div>
