@@ -1,12 +1,11 @@
 import React from 'react';
 
-const Sort = () => {
+const Sort = ({sort, onClickSort}) => {
     const [openSort, setOpenSort] = React.useState(false)
-    const SortList = ["алфавиту", "цвету", "цене"]
-    const [selected, setSelected] = React.useState(0)
-
+    const SortList = ["алфавіту", "кольору", "ціні"]
+    
     const choseTypeOfSort = (i) => {
-        setSelected(i)
+        onClickSort(i)
         setOpenSort(false)
     }
 
@@ -25,8 +24,8 @@ const Sort = () => {
                         fill="#2C2C2C"
                     />
                 </svg>
-                <b>Сортировка по:</b>
-                <span onClick={() => setOpenSort(!openSort)}>{SortList[selected]}</span>
+                <b>Сортувати по:</b>
+                <span onClick={() => setOpenSort(!openSort)}>{SortList[sort]}</span>
             </div>
             {openSort && (<div className="sort__popup">
                 <ul>
@@ -34,7 +33,7 @@ const Sort = () => {
                         <li
                             key={item}
                             onClick={() => choseTypeOfSort(index)}
-                            className={index == selected ? "active" : ""}
+                            className={index == sort ? "active" : ""}
                         >
                             {item}
                         </li>
@@ -46,3 +45,5 @@ const Sort = () => {
 }
 
 export default Sort;
+
+

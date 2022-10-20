@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import ColorClothes from './ColorClothes';
 
 export default function ClothesBlock(props) {
   const { title, id, link = 0, brand, sizes, color, price, category = "clothes", rating } = props
@@ -41,6 +42,7 @@ export default function ClothesBlock(props) {
             {size}
             </li>
           ))}
+          {/* <ColorClothes/> */}
         </ul>
       </div>
       <div className="clothes-block__bottom">

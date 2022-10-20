@@ -7,7 +7,7 @@
     "size": ["S", "M", "L", "XL", "XXL"],
     "color": "чорний",
     "price": 600,
-    "category": "hoodies",
+    "category": "Худі",
     "rating": 0
   },
   {
@@ -18,7 +18,7 @@
     "size": ["S", "M", "L", "XL", "XXL"],
     "color": "чорний",
     "price": 350,
-    "category": "sweatshirts",
+    "category": "Світшоти",
     "rating": 0
   },
   {
@@ -29,7 +29,7 @@
     "size": ["S", "M", "L", "XL", "XXL"],
     "color": "чорна",
     "price": 150,
-    "category": "tshirts",
+    "category": "Футболки",
     "rating": 0
   },
   {
@@ -40,7 +40,7 @@
     "size": ["S", "M", "L", "XL", "XXL"],
     "color": "сірий",
     "price": 600,
-    "category": "hoodies",
+    "category": "Худі",
     "rating": 0
   },
   {
@@ -51,7 +51,7 @@
     "size": ["S", "M", "L", "XL", "XXL"],
     "color": "сірий",
     "price": 350,
-    "category": "sweatshirts",
+    "category": "Світшоти",
     "rating": 0
   },
   {
@@ -62,7 +62,7 @@
     "size": ["S", "M", "L", "XL", "XXL"],
     "color": "сіра",
     "price": 150,
-    "category": "tshirts",
+    "category": "Футболки",
     "rating": 0
   },
   {
@@ -73,7 +73,7 @@
     "size": ["S", "M", "L", "XL", "XXL"],
     "color": "білий",
     "price": 550,
-    "category": "hoodies",
+    "category": "Худі",
     "rating": 0
   },
   {
@@ -84,7 +84,7 @@
     "size": ["S", "M", "L", "XL", "XXL"],
     "color": "білий",
     "price": 330,
-    "category": "sweatshirts",
+    "category": "Світшоти",
     "rating": 0
   },
   {
@@ -95,7 +95,7 @@
     "size": ["S", "M", "L", "XL", "XXL"],
     "color": "біла",
     "price": 120,
-    "category": "tshirts",
+    "category": "Футболки",
     "rating": 0
   }
 ]
