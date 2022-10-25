@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios';
 
 import Categories from '../components/Categories';
@@ -6,18 +6,18 @@ import Sort from '../components/Sort';
 import ClothesBlock from '../components/ClothesBlock';
 import Skeleton from '../components/ClothesBlock/Skeleton'
 import Pagination from '../components/Pagination';
+import {SearchContext} from '../App'
 
-export default function Home({ search }) {
+export default function Home() {
     const [clothes, setClothes] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [categoryId, setCategoryId] = useState(0)
     const [sortType, setSortType] = useState(0)
     const [page, setPage] = useState(1)
-console.log(page);
+    const {search} = useContext(SearchContext)
+
     const url = "https://630927d6722029d9dddf3c35.mockapi.io/blank_clothes?"
-
     const categories = ["Усі", "Худі", "Світшоти", "Футболки"]
-
 
     React.useEffect(() => {
         setIsLoading(true)
@@ -31,9 +31,9 @@ console.log(page);
                 setClothes(arr)
                 setIsLoading(false)
             })
-
         window.scroll(0, 0)
     }, [categoryId, sortType, search, page])
+
     const clothesList = clothes.filter(item => {
         if (item.title.toLowerCase().includes(search.toLowerCase()) || item.color.toLowerCase().includes(search.toLowerCase())) {
             return true

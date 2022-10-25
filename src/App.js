@@ -1,5 +1,4 @@
-import React from 'react';
-import { createContext } from 'react';
+import React, { createContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './scss/app.scss';
 
@@ -10,7 +9,7 @@ import Cart from './pages/Cart';
 
 // import clothes from './assets/blank_clothes.json'
 
-export const AppContext = createContext(null)
+export const SearchContext = createContext(null)
 
 function App() {
   const [search, setSearch] = React.useState('')
@@ -18,16 +17,16 @@ function App() {
     <>
       <div className="App">
         <div className="wrapper">
-          <AppContext.Provider value={{ search: search, setSearch: setSearch }}>
+          <SearchContext.Provider value={{ search, setSearch }}>
             <Header />
-          </AppContext.Provider>
-          <div className="content">
-            <Routes>
-              <Route path="/" element={<Home search={search}/>} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </div>
+            <div className="content">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
+          </SearchContext.Provider>
         </div>
       </div>
     </>
