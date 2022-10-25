@@ -42,6 +42,19 @@
     }
     .header__cart {
       padding-top: 30px;
+
+    }
+  }
+
+  @media (max-width:1110px) and (min-width:800px){
+    .container{
+      flex-wrap: wrap;
+      justify-content:space-around;
+    }
+    .header__logo{
+      width:800px;
+      margin-bottom: 30px;
+      justify-content: center;
     }
   }
 

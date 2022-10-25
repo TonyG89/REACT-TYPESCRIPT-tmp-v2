@@ -16,6 +16,7 @@ const Sort = ({sort, onClickSort}) => {
                     width="10"
                     height="6"
                     viewBox="0 0 10 6"
+                    transform="rotate(180)"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                 >
