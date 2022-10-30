@@ -1,23 +1,31 @@
 import React, { useState, useContext } from 'react'
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 
+import {setCategoryId} from '../redux/slices/filterSlice';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import ClothesBlock from '../components/ClothesBlock';
 import Skeleton from '../components/ClothesBlock/Skeleton'
 import Pagination from '../components/Pagination';
-import {SearchContext} from '../App'
+import { SearchContext } from '../App'
 
 export default function Home() {
+    const dispatch=useDispatch()
+    const categoryId = useSelector(state => state.filter.categoryId)
     const [clothes, setClothes] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-    const [categoryId, setCategoryId] = useState(0)
     const [sortType, setSortType] = useState(0)
     const [page, setPage] = useState(1)
-    const {search} = useContext(SearchContext)
+    const { search } = useContext(SearchContext)
 
     const url = "https://630927d6722029d9dddf3c35.mockapi.io/blank_clothes?"
     const categories = ["Усі", "Худі", "Світшоти", "Футболки"]
+
+    const onClickCategory = (id) => {
+console.log(id);
+dispatch(setCategoryId(id))
+    }
 
     React.useEffect(() => {
         setIsLoading(true)
@@ -25,7 +33,7 @@ export default function Home() {
         const filterByCategory = categoryId > 0 ? "category=" + categories[categoryId] + "&" : ''
         const sortingBy = "sortBy=" + sortBy[sortType] + "&order=ASC"
         const searching = search ? "&search=" + search + "&" : ''
-        axios.get(url + "page="+page+"&limit=6&" + filterByCategory + sortingBy + searching)
+        axios.get(url + "page=" + page + "&limit=4&" + filterByCategory + sortingBy + searching)
             .then((res) => {
                 const arr = res.data
                 setClothes(arr)
@@ -50,7 +58,7 @@ export default function Home() {
         <>
             <div className="container">
                 <div className="content__top">
-                    <Categories categories={categories} value={categoryId} onClickCategory={(id) => setCategoryId(id)} />
+                    <Categories categories={categories} value={categoryId} onClickCategory={onClickCategory} />
                     <Sort sort={sortType} onClickSort={(type) => setSortType(type)} />
                 </div>
                 <h2 className="content__title">Усі</h2>
@@ -58,7 +66,7 @@ export default function Home() {
                     {isLoading ? [...new Array(6)].map((i, index) => <Skeleton key={index} />) : clothesList
                     }
                 </div>
-                <Pagination currentPage={page} onClickPage={(p)=>setPage(p)}/>
+                <Pagination currentPage={page} onClickPage={(p) => setPage(p)} />
             </div>
         </>
     )
