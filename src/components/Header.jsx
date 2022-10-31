@@ -1,5 +1,5 @@
 import logo from '../assets/img/tmp-logo.png'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Search from './Search';
 
 const Header = () => {
@@ -7,8 +7,8 @@ const Header = () => {
         <>
             <header className="header">
                 <div className="container">
-                <Link to="/"><div className="header__logo">
-                       <img width="50" src={logo} alt="TMPrint logo" />
+                    <Link to="/"><div className="header__logo">
+                        <img width="50" src={logo} alt="TMPrint logo" />
                         <div className='title'>
                             <h1>Too Much Blank Clothes</h1>
                             <p>Дешевий та якісний бланковий одяг</p>

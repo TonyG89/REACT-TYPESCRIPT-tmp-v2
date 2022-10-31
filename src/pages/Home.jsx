@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 
-import {setCategoryId} from '../redux/slices/filterSlice';
+import { setCategoryId } from '../redux/slices/filterSlice';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import ClothesBlock from '../components/ClothesBlock';
@@ -11,11 +11,11 @@ import Pagination from '../components/Pagination';
 import { SearchContext } from '../App'
 
 export default function Home() {
-    const dispatch=useDispatch()
-    const categoryId = useSelector(state => state.filter.categoryId)
+    const dispatch = useDispatch()
+    const { categoryId, sort } = useSelector(state => state.filter)
+
     const [clothes, setClothes] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-    const [sortType, setSortType] = useState(0)
     const [page, setPage] = useState(1)
     const { search } = useContext(SearchContext)
 
@@ -23,15 +23,15 @@ export default function Home() {
     const categories = ["Усі", "Худі", "Світшоти", "Футболки"]
 
     const onClickCategory = (id) => {
-console.log(id);
-dispatch(setCategoryId(id))
+        dispatch(setCategoryId(id))
     }
+    console.log(sort);
 
     React.useEffect(() => {
         setIsLoading(true)
         const sortBy = ["title", "color", "price"]
         const filterByCategory = categoryId > 0 ? "category=" + categories[categoryId] + "&" : ''
-        const sortingBy = "sortBy=" + sortBy[sortType] + "&order=ASC"
+        const sortingBy = "sortBy=" + sortBy[sort] + "&order=ASC"
         const searching = search ? "&search=" + search + "&" : ''
         axios.get(url + "page=" + page + "&limit=4&" + filterByCategory + sortingBy + searching)
             .then((res) => {
@@ -40,7 +40,7 @@ dispatch(setCategoryId(id))
                 setIsLoading(false)
             })
         window.scroll(0, 0)
-    }, [categoryId, sortType, search, page])
+    }, [categoryId, sort, search, page])
 
     const clothesList = clothes.filter(item => {
         if (item.title.toLowerCase().includes(search.toLowerCase()) || item.color.toLowerCase().includes(search.toLowerCase())) {
@@ -59,7 +59,7 @@ dispatch(setCategoryId(id))
             <div className="container">
                 <div className="content__top">
                     <Categories categories={categories} value={categoryId} onClickCategory={onClickCategory} />
-                    <Sort sort={sortType} onClickSort={(type) => setSortType(type)} />
+                    <Sort />
                 </div>
                 <h2 className="content__title">Усі</h2>
                 <div className="content__items">

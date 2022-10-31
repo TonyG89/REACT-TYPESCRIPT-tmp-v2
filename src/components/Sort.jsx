@@ -1,11 +1,15 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {setSort} from '../redux/slices/filterSlice';
 
-const Sort = ({sort, onClickSort}) => {
+const Sort = () => {
+    const dispatch = useDispatch()
+    const sort = useSelector(state=>state.filter.sort)
     const [openSort, setOpenSort] = React.useState(false)
     const SortList = ["алфавіту", "кольору", "ціні"]
-    
+
     const choseTypeOfSort = (i) => {
-        onClickSort(i)
+        dispatch(setSort(i))
         setOpenSort(false)
     }
 
@@ -26,7 +30,7 @@ const Sort = ({sort, onClickSort}) => {
                     />
                 </svg>
                 <b>Сортувати по:</b>
-                <span onClick={() => setOpenSort(!openSort)}>{SortList[sort]}</span>
+    <span onClick={() => setOpenSort(!openSort)}>{SortList[sort]}</span>
             </div>
             {openSort && (<div className="sort__popup">
                 <ul>
