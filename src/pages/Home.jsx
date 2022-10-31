@@ -25,7 +25,6 @@ export default function Home() {
     const onClickCategory = (id) => {
         dispatch(setCategoryId(id))
     }
-    console.log(sort);
 
     React.useEffect(() => {
         setIsLoading(true)
