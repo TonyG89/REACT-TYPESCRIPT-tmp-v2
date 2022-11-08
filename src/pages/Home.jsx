@@ -1,23 +1,28 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
+import qs from 'qs';
+import { useNavigate, Link } from 'react-router-dom';
 
-import { setCategoryId } from '../redux/slices/filterSlice';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import ClothesBlock from '../components/ClothesBlock';
 import Skeleton from '../components/ClothesBlock/Skeleton'
 import Pagination from '../components/Pagination';
-import { SearchContext } from '../App'
+import { setCategoryId, setPage, setFilter } from '../redux/slices/filterSlice';
 
 export default function Home() {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { categoryId, sort } = useSelector(state => state.filter)
+    const isMounted = useRef(false);
+    const isSearch = useRef(false);
+
+    const { categoryId, sort, page, search } = useSelector(state => state.filter)
 
     const [clothes, setClothes] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-    const [page, setPage] = useState(1)
-    const { search } = useContext(SearchContext)
+    const [allPages, setAllPages] = useState(0);
+    const [allGoods, setAllGoods] = useState(0);
 
     const url = "https://630927d6722029d9dddf3c35.mockapi.io/blank_clothes?"
     const categories = ["Усі", "Худі", "Світшоти", "Футболки"]
@@ -26,19 +31,59 @@ export default function Home() {
         dispatch(setCategoryId(id))
     }
 
-    React.useEffect(() => {
+    const onPageChange = (num) => {
+        dispatch(setPage(num))
+    }
+
+    const fetchClothes = () => {
         setIsLoading(true)
+        const goodsOnPage = 4
         const sortBy = ["title", "color", "price"]
         const filterByCategory = categoryId > 0 ? "category=" + categories[categoryId] + "&" : ''
         const sortingBy = "sortBy=" + sortBy[sort] + "&order=ASC"
         const searching = search ? "&search=" + search + "&" : ''
-        axios.get(url + "page=" + page + "&limit=4&" + filterByCategory + sortingBy + searching)
+        const urlApendix = "page=" + page + "&" + filterByCategory + sortingBy + searching
+
+        axios.get(url + urlApendix).then(res => {
+            setAllGoods(res.data.length)
+            setAllPages(Math.ceil(res.data.length / goodsOnPage))
+        })
+
+        axios.get(url + urlApendix + "&limit=" + goodsOnPage)
             .then((res) => {
                 const arr = res.data
                 setClothes(arr)
                 setIsLoading(false)
             })
-        window.scroll(0, 0)
+    }
+    
+    useEffect(() => {
+        if (isMounted.current) {
+            console.log("rend");
+            const queryString = qs.stringify({
+                categoryId, sort, page, search
+            })
+            navigate(`/?${queryString}`)
+        }
+            
+            isMounted.current = true
+
+    }, [categoryId, sort, page, search]);
+
+    useEffect(() => {
+        if (window.location.search) {
+            const params = qs.parse(window.location.search.substring(1))
+            dispatch(setFilter(params))
+            isSearch.current = true
+        }
+    }, []);
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+        if (!isSearch.current) {
+            fetchClothes()
+        }
+        isSearch.current = false
     }, [categoryId, sort, search, page])
 
     const clothesList = clothes.filter(item => {
@@ -53,6 +98,7 @@ export default function Home() {
         brand={obj.brand}
         sizes={obj.size} />
     ))
+
     return (
         <>
             <div className="container">
@@ -60,12 +106,12 @@ export default function Home() {
                     <Categories categories={categories} value={categoryId} onClickCategory={onClickCategory} />
                     <Sort />
                 </div>
-                <h2 className="content__title">Усі</h2>
+                <h2 className="content__title">{categories[categoryId]} ({allGoods} товарів)</h2>
                 <div className="content__items">
                     {isLoading ? [...new Array(6)].map((i, index) => <Skeleton key={index} />) : clothesList
                     }
                 </div>
-                <Pagination currentPage={page} onClickPage={(p) => setPage(p)} />
+                <Pagination currentPage={page} onClickPage={onPageChange} allPages={allPages} />
             </div>
         </>
     )
