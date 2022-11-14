@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import ColorClothes from './ColorClothes';
+import { useDispatch, useSelector } from 'react-redux';
+import {addItem} from '../../redux/slices/cartSlice';
 
 export default function ClothesBlock(props) {
   const { title, id, link = 0, brand, sizes, color, price, category = "clothes", rating } = props
   const typeBrand = ["Fruit of the Loom", "Gildan"]
 
+  const dispatch=useDispatch()
   // add count
   const [count, setCount] = useState(0)
   const onClickBtn = () => setCount(count + 1)
@@ -13,7 +16,11 @@ export default function ClothesBlock(props) {
   const [activeBrand, setActiveBrand] = useState(0)
   const [activeSize, setActiveSize] = useState(0)
 
-
+  const onAdd = () => {
+    const item = { id, title, link, brand: activeBrand, size: activeSize, color, price }
+    dispatch(addItem(item))
+    
+  }
   return (
     <div className="clothes-block">
       <img
@@ -28,7 +35,7 @@ export default function ClothesBlock(props) {
             <li key={type}
               className={activeBrand === type ? "active" : ""}
               onClick={() => setActiveBrand(type)}
-              >
+            >
               {typeBrand[type]}
             </li>
           ))}
@@ -39,7 +46,7 @@ export default function ClothesBlock(props) {
               className={activeSize === index ? "active" : ""}
               onClick={() => setActiveSize(index)}
             >
-            {size}
+              {size}
             </li>
           ))}
           {/* <ColorClothes/> */}

@@ -59,7 +59,6 @@ export default function Home() {
     
     useEffect(() => {
         if (isMounted.current) {
-            console.log("rend");
             const queryString = qs.stringify({
                 categoryId, sort, page, search
             })

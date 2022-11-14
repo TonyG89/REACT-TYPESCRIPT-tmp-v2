@@ -52,6 +52,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    .sort{
+      cursor: pointer;
+    }
     @media (max-width: 900px) {
       flex-direction: column;
       .sort {
