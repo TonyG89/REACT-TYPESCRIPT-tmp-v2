@@ -56,7 +56,7 @@ export default function Home() {
                 setIsLoading(false)
             })
     }
-    
+
     useEffect(() => {
         if (isMounted.current) {
             const queryString = qs.stringify({
@@ -64,8 +64,8 @@ export default function Home() {
             })
             navigate(`/?${queryString}`)
         }
-            
-            isMounted.current = true
+
+        isMounted.current = true
 
     }, [categoryId, sort, page, search]);
 
@@ -90,12 +90,17 @@ export default function Home() {
             return true
         }
         return false
-    }).map(obj => (<ClothesBlock key={obj.id}
+    }).map(obj => (<ClothesBlock
+        key={obj.id}
         title={obj.title + " " + obj.color}
+        id={obj.id}
         price={obj.price}
         link={obj.link}
         brand={obj.brand}
-        sizes={obj.size} />
+        sizes={obj.size}
+        color={obj.color}
+        
+    />
     ))
 
     return (

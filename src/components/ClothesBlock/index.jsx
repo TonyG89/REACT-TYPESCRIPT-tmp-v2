@@ -6,21 +6,22 @@ import {addItem} from '../../redux/slices/cartSlice';
 export default function ClothesBlock(props) {
   const { title, id, link = 0, brand, sizes, color, price, category = "clothes", rating } = props
   const typeBrand = ["Fruit of the Loom", "Gildan"]
+  const typeSize = ["S", "M", "L", "XL"]
 
   const dispatch=useDispatch()
   // add count
   const [count, setCount] = useState(0)
-  const onClickBtn = () => setCount(count + 1)
 
   // active btn
   const [activeBrand, setActiveBrand] = useState(0)
   const [activeSize, setActiveSize] = useState(0)
 
   const onAdd = () => {
-    const item = { id, title, link, brand: activeBrand, size: activeSize, color, price }
+    const item = { id, title, link, brand: typeBrand[activeBrand], size: typeSize[activeSize], color, price }
+    setCount(count + 1)
     dispatch(addItem(item))
-    
   }
+  
   return (
     <div className="clothes-block">
       <img
@@ -54,7 +55,7 @@ export default function ClothesBlock(props) {
       </div>
       <div className="clothes-block__bottom">
         <div className="clothes-block__price">{price} грн</div>
-        <button className="button button--outline button--add" onClick={onClickBtn}>
+        <button className="button button--outline button--add" onClick={onAdd}>
           <svg
             width="12"
             height="12"
@@ -68,7 +69,7 @@ export default function ClothesBlock(props) {
             />
           </svg>
           <span>Додати</span>
-          <i>{count}</i>
+          {count>0 && <i>{count}</i>}
         </button>
       </div>
     </div>
