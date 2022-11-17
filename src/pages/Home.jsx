@@ -10,7 +10,7 @@ import ClothesBlock from '../components/ClothesBlock';
 import Skeleton from '../components/ClothesBlock/Skeleton'
 import Pagination from '../components/Pagination';
 import { setCategoryId, setPage, setFilter } from '../redux/slices/filterSlice';
-import { fetchClothes } from '../redux/slices/clothesSlice'
+import { fetchClothes, clothesSlice } from '../redux/slices/clothesSlice'
 
 export default function Home() {
     const navigate = useNavigate()
@@ -18,10 +18,7 @@ export default function Home() {
     const isMounted = useRef(false);
     const isSearch = useRef(false);
 
-    const { items, status } = useSelector(state => {
-    console.log(state.clothes);
-        state.clothes
-    })
+    const { items, status } = useSelector(state => state.clothes)
     const { categoryId, sort, page, search } = useSelector(state => state.filter)
 
     const [allPages, setAllPages] = useState(0);
@@ -85,7 +82,7 @@ export default function Home() {
         }
         isSearch.current = false
     }, [categoryId, sort, search, page])
-    console.log(clothes, items, status);
+
     const clothesList = items.filter(item => {
         if (item.title.toLowerCase().includes(search.toLowerCase()) || item.color.toLowerCase().includes(search.toLowerCase())) {
             return true
@@ -100,7 +97,6 @@ export default function Home() {
         brand={obj.brand}
         sizes={obj.size}
         color={obj.color}
-
     />
     ))
 
@@ -112,10 +108,14 @@ export default function Home() {
                     <Sort />
                 </div>
                 <h2 className="content__title">{categories[categoryId]} ({allGoods} товарів)</h2>
-                <div className="content__items">
-                    {status === "loading" ? [...new Array(6)].map((i, index) => <Skeleton key={index} />) : clothesList
-                    }
-                </div>
+
+                {status === "error" ? (
+                    <div className='content__error-info'><h2>Сталася помилка. Спробуй пізніше<icon>😕</icon></h2></div>
+                ) : (
+                    <div className="content__items"> {status === "loading" ? [...new Array(6)].map((i, index) => <Skeleton key={index} />) : clothesList}</div>
+                )}
+
+
                 <Pagination currentPage={page} onClickPage={onPageChange} allPages={allPages} />
             </div>
         </>
