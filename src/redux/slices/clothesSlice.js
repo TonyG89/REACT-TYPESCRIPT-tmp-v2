@@ -35,6 +35,7 @@ const clothesSlice = createSlice({
     }
 })
 
+export const selectClothes = state=>state.clothes
 
 export const { setItems } = clothesSlice.actions
 

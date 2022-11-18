@@ -12,15 +12,11 @@ import Cart from './pages/Cart';
 
 // import clothes from './assets/blank_clothes.json'
 
-export const SearchContext = createContext(null)
-
 function App() {
-  const [search, setSearch] = React.useState('')
   return (
     <>
       <div className="App">
         <div className="wrapper">
-          <SearchContext.Provider value={{ search, setSearch }}>
             <Header />
             <div className="content">
               <Routes>
@@ -29,7 +25,6 @@ function App() {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
-          </SearchContext.Provider>
         </div>
       </div>
     </>

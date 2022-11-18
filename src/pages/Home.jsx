@@ -9,8 +9,8 @@ import Sort from '../components/Sort';
 import ClothesBlock from '../components/ClothesBlock';
 import Skeleton from '../components/ClothesBlock/Skeleton'
 import Pagination from '../components/Pagination';
-import { setCategoryId, setPage, setFilter } from '../redux/slices/filterSlice';
-import { fetchClothes, clothesSlice } from '../redux/slices/clothesSlice'
+import { setCategoryId, setPage, setFilter, selectFilter } from '../redux/slices/filterSlice';
+import { fetchClothes, selectClothes } from '../redux/slices/clothesSlice'
 
 export default function Home() {
     const navigate = useNavigate()
@@ -18,8 +18,8 @@ export default function Home() {
     const isMounted = useRef(false);
     const isSearch = useRef(false);
 
-    const { items, status } = useSelector(state => state.clothes)
-    const { categoryId, sort, page, search } = useSelector(state => state.filter)
+    const { items, status } = useSelector(selectClothes)
+    const { categoryId, sort, page, search } = useSelector(selectFilter)
 
     const [allPages, setAllPages] = useState(0);
     const [allGoods, setAllGoods] = useState(0);
