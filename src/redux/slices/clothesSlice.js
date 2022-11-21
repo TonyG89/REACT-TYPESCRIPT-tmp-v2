@@ -4,7 +4,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 export const fetchClothes = createAsyncThunk('clothes/fetchClothesStatus', async (params) => {
     const { url, urlApendix, goodsOnPage } = params
     const res = await axios.get(url + urlApendix + "&limit=" + goodsOnPage)
-    console.log(res.data);
     return res.data
 })
 

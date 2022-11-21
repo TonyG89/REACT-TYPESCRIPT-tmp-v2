@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from 'react'
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import qs from 'qs';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -88,8 +88,7 @@ export default function Home() {
             return true
         }
         return false
-    }).map(obj => (<ClothesBlock
-        key={obj.id}
+    }).map(obj => (<Link to={`/clothes/${obj.id}`} key={obj.id}><ClothesBlock
         title={obj.title + " " + obj.color}
         id={obj.id}
         price={obj.price}
@@ -97,7 +96,7 @@ export default function Home() {
         brand={obj.brand}
         sizes={obj.size}
         color={obj.color}
-    />
+    /></Link>
     ))
 
     return (
