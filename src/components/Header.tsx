@@ -1,12 +1,13 @@
 import logo from '../assets/img/tmp-logo.png'
+import React from 'react'
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 import Search from './Search';
 import {selectCart} from '../redux/slices/cartSlice';
 
-const Header = () => {
+const Header: React.FC = () => {
     const { items, totalPrice } = useSelector(selectCart)
-    const sumItems = items.reduce((sum,item)=>sum+item.count,0)
+    const sumItems = items.reduce((sum:number,item:{count:number})=>sum+item.count,0)
     return (
         <>
             <header className="header">

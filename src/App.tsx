@@ -1,9 +1,5 @@
-import React, { createContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './scss/app.scss';
-
-import { useSelector, useDispatch } from 'react-redux'
-// import {} from './redux/slices/filterSlice'
 
 import Header from './components/Header'
 import Home from './pages/Home';

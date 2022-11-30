@@ -7,10 +7,12 @@ import { Provider } from 'react-redux'
 
 import { store } from './redux/store'
 
-import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+const rootEL =  document.getElementById('root');
+
+if (rootEL) {
+  const root = ReactDOM.createRoot(rootEL) 
+  root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
@@ -18,6 +20,4 @@ root.render(
       </Provider>
     </BrowserRouter>
   </React.StrictMode>
-);
-
-reportWebVitals();
+)}

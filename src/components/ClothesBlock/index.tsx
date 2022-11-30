@@ -1,27 +1,57 @@
-import React, { useState } from 'react'
-import ColorClothes from './ColorClothes';
-import { useDispatch, useSelector } from 'react-redux';
-import {addItem} from '../../redux/slices/cartSlice';
+import React, { useState } from "react";
+// import ColorClothes from './ColorClothes';
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../../redux/slices/cartSlice";
 
-export default function ClothesBlock(props) {
-  const { title, id, link = 0, brand, sizes, color, price, category = "clothes", rating } = props
-  const typeBrand = ["Fruit of the Loom", "Gildan"]
-  const typeSize = ["S", "M", "L", "XL"]
+type ClothesBlockProps = {
+  title: string;
+  id: string;
+  link: number;
+  brand: string;
+  sizes: number;
+  color: string;
+  price: number;
+  category: string;
+  rating: number;
+};
 
-  const dispatch=useDispatch()
+const ClothesBlock: React.FC<ClothesBlockProps> = (props) => {
+  const {
+    title,
+    id,
+    link = 0,
+    brand,
+    sizes,
+    color,
+    price,
+    category = "clothes",
+    rating,
+  } = props;
+  const typeBrand = ["Fruit of the Loom", "Gildan"];
+  const typeSize = ["S", "M", "L", "XL"];
+
+  const dispatch = useDispatch();
   // add count
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState<number>(0);
 
   // active btn
-  const [activeBrand, setActiveBrand] = useState(0)
-  const [activeSize, setActiveSize] = useState(0)
+  const [activeBrand, setActiveBrand] = useState<number>(0);
+  const [activeSize, setActiveSize] = useState<number>(0);
 
   const onAdd = () => {
-    const item = { id, title, link, brand: typeBrand[activeBrand], size: typeSize[activeSize], color, price }
-    setCount(count + 1)
-    dispatch(addItem(item))
-  }
-  
+    const item = {
+      id,
+      title,
+      link,
+      brand: typeBrand[activeBrand],
+      size: typeSize[activeSize],
+      color,
+      price,
+    };
+    setCount(count + 1);
+    dispatch(addItem(item));
+  };
+
   return (
     <div className="clothes-block">
       <img
@@ -32,8 +62,9 @@ export default function ClothesBlock(props) {
       <h4 className="clothes-block__title">{title}</h4>
       <div className="clothes-block__selector">
         <ul>
-          {brand.map((type) => (
-            <li key={type}
+          {brand.map((type:number) => (
+            <li
+              key={type}
               className={activeBrand === type ? "active" : ""}
               onClick={() => setActiveBrand(type)}
             >
@@ -42,8 +73,9 @@ export default function ClothesBlock(props) {
           ))}
         </ul>
         <ul>
-          {sizes.map((size, index) => (
-            <li key={size}
+          {sizes.map((size: string, index: any) => (
+            <li
+              key={size}
               className={activeSize === index ? "active" : ""}
               onClick={() => setActiveSize(index)}
             >
@@ -69,9 +101,11 @@ export default function ClothesBlock(props) {
             />
           </svg>
           <span>Додати</span>
-          {count>0 && <i>{count}</i>}
+          {count > 0 && <i>{count}</i>}
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default ClothesBlock;
