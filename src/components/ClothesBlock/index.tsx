@@ -2,6 +2,7 @@ import React, { useState } from "react";
 // import ColorClothes from './ColorClothes';
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
+import { CartItem } from "../../redux/slices/cartSlice";
 
 type ClothesBlockProps = {
   title: string;
@@ -39,7 +40,7 @@ const ClothesBlock: React.FC<ClothesBlockProps> = (props) => {
   const [activeSize, setActiveSize] = useState<number>(0);
 
   const onAdd = () => {
-    const item = {
+    const item: CartItem = {
       id,
       title,
       link,
@@ -62,7 +63,7 @@ const ClothesBlock: React.FC<ClothesBlockProps> = (props) => {
       <h4 className="clothes-block__title">{title}</h4>
       <div className="clothes-block__selector">
         <ul>
-          {brand.map((type:number) => (
+          {brand.map((type: number) => (
             <li
               key={type}
               className={activeBrand === type ? "active" : ""}

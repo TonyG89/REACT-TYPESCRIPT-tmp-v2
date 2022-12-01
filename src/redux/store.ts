@@ -4,5 +4,7 @@ import cart from './slices/cartSlice';
 import clothes from './slices/clothesSlice'
 
 export const store = configureStore({
-  reducer: {filter, cart, clothes},
+  reducer: { filter, cart, clothes },
 })
+
+export type RootState = ReturnType<typeof store.getState>
