@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useCallback } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import qs from "qs";
@@ -34,9 +34,9 @@ const Home: React.FC = () => {
   const url = "https://630927d6722029d9dddf3c35.mockapi.io/blank_clothes?";
   const categories:string[] = ["Усі", "Худі", "Світшоти", "Футболки"];
 
-  const onClickCategory = (id: number) => {
+  const onClickCategory = useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  };
+  },[]);
 
   const onPageChange = (num: number) => {
     dispatch(setPage(num));
@@ -106,6 +106,7 @@ const Home: React.FC = () => {
     })
     .map((obj:any) => (
         <ClothesBlock
+        key={obj.id}
           title={obj.title + " " + obj.color}
           id={obj.id}
           price={obj.price}
@@ -125,7 +126,7 @@ const Home: React.FC = () => {
             value={categoryId}
             onClickCategory={onClickCategory}
           />
-          <Sort />
+          <Sort value={sort}/>
         </div>
         <h2 className="content__title">
           {categories[categoryId]} ({allGoods} товарів)

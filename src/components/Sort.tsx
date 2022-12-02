@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSort, selectSort } from "../redux/slices/filterSlice";
+import {useWhyDidYouUpdate} from 'ahooks'
 
-const Sort: React.FC = () => {
+const Sort: React.FC<{value:number} > = React.memo(({value}) => {
+  useWhyDidYouUpdate("Sort",value)
   const dispatch = useDispatch();
-  const sort = useSelector(selectSort);
   const sortRef = useRef<HTMLDivElement>(null);
 
   const [openSort, setOpenSort] = useState(false);
@@ -46,7 +47,7 @@ const Sort: React.FC = () => {
           />
         </svg>
         <b>Сортувати по:</b>
-        <span>{SortList[sort]}</span>
+        <span>{SortList[value]}</span>
       </div>
       {openSort && (
         <div className="sort__popup">
@@ -55,7 +56,7 @@ const Sort: React.FC = () => {
               <li
                 key={item}
                 onClick={() => choseTypeOfSort(index)}
-                className={index === sort ? "active" : ""}
+                className={index === value ? "active" : ""}
               >
                 {item}
               </li>
@@ -65,6 +66,6 @@ const Sort: React.FC = () => {
       )}
     </div>
   );
-};
+})
 
 export default Sort;
