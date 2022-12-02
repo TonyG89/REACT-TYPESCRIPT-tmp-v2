@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 // import ColorClothes from './ColorClothes';
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { addItem } from "../../redux/slices/cartSlice";
 import { CartItem } from "../../redux/slices/cartSlice";
 
@@ -55,12 +56,14 @@ const ClothesBlock: React.FC<ClothesBlockProps> = (props) => {
 
   return (
     <div className="clothes-block">
+      <Link to={`/clothes/${id}`} key={id}>
       <img
         className="clothes-block__image"
         src={`./img/clothes/${link}.jpg`}
         alt={category}
       />
       <h4 className="clothes-block__title">{title}</h4>
+      </Link>
       <div className="clothes-block__selector">
         <ul>
           {brand.map((type: number) => (

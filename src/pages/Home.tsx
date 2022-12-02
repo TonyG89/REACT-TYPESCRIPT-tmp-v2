@@ -14,12 +14,14 @@ import {
   setPage,
   setFilter,
   selectFilter,
+  FilterSliceState,
 } from "../redux/slices/filterSlice";
-import { fetchClothes, selectClothes } from "../redux/slices/clothesSlice";
+import { fetchClothes, selectClothes, FetchClothesArgs } from "../redux/slices/clothesSlice";
+import {useAppDispatch} from '../redux/store'
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isMounted = useRef(false);
   const isSearch = useRef(false);
 
@@ -41,7 +43,7 @@ const Home: React.FC = () => {
   };
 
   const getClothes = async () => {
-    const goodsOnPage = 4;
+    const goodsOnPage = "4";
     const sortBy = ["title", "color", "price"];
     const filterByCategory =
       categoryId > 0 ? "category=" + categories[categoryId] + "&" : "";
@@ -49,7 +51,7 @@ const Home: React.FC = () => {
     const searching = search ? "&search=" + search + "&" : "";
     const urlApendix =
       "page=" + page + "&" + filterByCategory + sortingBy + searching;
-//@ts-ignore
+
     dispatch(fetchClothes({ url, urlApendix, goodsOnPage })); 
 
     axios
@@ -73,17 +75,18 @@ const Home: React.FC = () => {
     }
 
     isMounted.current = true;
+
   }, [categoryId, sort, page, search]);
 
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
+      const params: FilterSliceState = qs.parse(window.location.search.substring(1));
       dispatch(setFilter(params));
       isSearch.current = true;
     }
   }, []);
 
-  useEffect(() => {
+  useEffect(() => {    
     window.scrollTo(0, 0);
     if (!isSearch.current) {
       getClothes();
@@ -102,7 +105,6 @@ const Home: React.FC = () => {
       return false;
     })
     .map((obj:any) => (
-      <Link to={`/clothes/${obj.id}`} key={obj.id}>
         <ClothesBlock
           title={obj.title + " " + obj.color}
           id={obj.id}
@@ -112,7 +114,6 @@ const Home: React.FC = () => {
           sizes={obj.size}
           color={obj.color}
         />
-      </Link>
     ));
 
   return (

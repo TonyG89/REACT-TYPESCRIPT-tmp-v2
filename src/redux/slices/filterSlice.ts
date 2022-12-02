@@ -1,14 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store'
-
-interface FilterSliceState{
-  categoryId: number;
-  sort: number;
-  page: number;
-  search: string;
+export interface FilterSliceState {
+  categoryId?: number;
+  sort?: number;
+  page?: number;
+  search?: string;
 }
 
-const initialState:FilterSliceState = {
+const initialState: FilterSliceState = {
   categoryId: 0,
   sort: 0,
   page: 1,
@@ -21,23 +20,23 @@ const filterSlice = createSlice({
   name: 'filter',
   initialState,
   reducers: {
-    setCategoryId(state, action) {
+    setCategoryId(state, action: PayloadAction<number>) {
       state.categoryId = action.payload
       state.page = 1;
     },
-    setSort(state, action) {
+    setSort(state, action: PayloadAction<number>) {
       state.sort = action.payload
       state.page = 1;
     },
-    setPage(state, action) {
+    setPage(state, action: PayloadAction<number>) {
       state.page = action.payload
     },
-    setFilter(state, action) {
+    setFilter(state, action: PayloadAction<FilterSliceState>) {
       state.categoryId = Number(action.payload.categoryId);
       state.page = Number(action.payload.page);
       state.sort = Number(action.payload.sort);
     },
-    setSearch(state, action) {
+    setSearch(state, action: PayloadAction<string>) {
       state.search = action.payload
     }
   }
