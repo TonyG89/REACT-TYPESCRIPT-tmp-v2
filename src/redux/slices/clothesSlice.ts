@@ -1,42 +1,17 @@
 import axios from 'axios'
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { CartItem } from './cartSlice'
+import { ClothesSliceState, Status, FetchClothesArgs, Clothes, FetchPageParams } from './types'
 
-export type FetchClothesArgs = {
-    categoryId: number;
-    sort: number;
-    page: number;
-    search: string;
-}
 
-type Clothes = {
-    id: string;
-    title: string;
-    link: number;
-    brand: string;
-    size: string;
-    color: string;
-    price: number;
-    count?: number;
-}
-
-export enum Status {
-    LOADING = "loading",
-    SUCCESS = "success",
-    ERROR = "error"
-}
-
-interface ClothesSliceState {
-    items: Clothes[];
-    status: Status;
-}
 
 const initialState: ClothesSliceState = {
     items: [],
     status: Status.LOADING
 }
+console.log(initialState);
 
-export const fetchClothes = createAsyncThunk('clothes/fetchClothesStatus', async (params: FetchClothesArgs) => {
+
+export const fetchClothes = createAsyncThunk('clothes/fetchClothesStatus', async (params: FetchPageParams) => {
     const { url, urlApendix, goodsOnPage } = params
     const res = await axios.get<Clothes[]>(url + urlApendix + "&limit=" + goodsOnPage)
     return res.data as Clothes[]

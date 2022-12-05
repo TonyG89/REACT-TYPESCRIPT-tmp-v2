@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef,useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import qs from "qs";
@@ -14,10 +14,10 @@ import {
   setPage,
   setFilter,
   selectFilter,
-  FilterSliceState,
 } from "../redux/slices/filterSlice";
-import { fetchClothes, selectClothes, FetchClothesArgs } from "../redux/slices/clothesSlice";
-import {useAppDispatch} from '../redux/store'
+import { fetchClothes, selectClothes } from "../redux/slices/clothesSlice";
+import { FilterSliceState } from "../redux/slices/types";
+import { useAppDispatch } from "../redux/store";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -32,11 +32,11 @@ const Home: React.FC = () => {
   const [allGoods, setAllGoods] = useState(0);
 
   const url = "https://630927d6722029d9dddf3c35.mockapi.io/blank_clothes?";
-  const categories:string[] = ["Усі", "Худі", "Світшоти", "Футболки"];
+  const categories: string[] = ["Усі", "Худі", "Світшоти", "Футболки"];
 
   const onClickCategory = useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  },[]);
+  }, []);
 
   const onPageChange = (num: number) => {
     dispatch(setPage(num));
@@ -52,13 +52,13 @@ const Home: React.FC = () => {
     const urlApendix =
       "page=" + page + "&" + filterByCategory + sortingBy + searching;
 
-    dispatch(fetchClothes({ url, urlApendix, goodsOnPage })); 
+    dispatch(fetchClothes({ url, urlApendix, goodsOnPage }));
 
     axios
       .get(url + urlApendix)
       .then((res) => {
         setAllGoods(res.data.length);
-        setAllPages(Math.ceil(res.data.length / goodsOnPage));
+        setAllPages(Math.ceil(res.data.length / +goodsOnPage));
       })
       .catch((err) => alert("сталася помилка - " + err));
   };
@@ -75,18 +75,19 @@ const Home: React.FC = () => {
     }
 
     isMounted.current = true;
-
   }, [categoryId, sort, page, search]);
 
   useEffect(() => {
     if (window.location.search) {
-      const params: FilterSliceState = qs.parse(window.location.search.substring(1));
+      const params: FilterSliceState = qs.parse(
+        window.location.search.substring(1)
+      );
       dispatch(setFilter(params));
       isSearch.current = true;
     }
   }, []);
 
-  useEffect(() => {    
+  useEffect(() => {
     window.scrollTo(0, 0);
     if (!isSearch.current) {
       getClothes();
@@ -104,17 +105,17 @@ const Home: React.FC = () => {
       }
       return false;
     })
-    .map((obj:any) => (
-        <ClothesBlock
+    .map((obj: any) => (
+      <ClothesBlock
         key={obj.id}
-          title={obj.title + " " + obj.color}
-          id={obj.id}
-          price={obj.price}
-          link={obj.link}
-          brand={obj.brand}
-          sizes={obj.size}
-          color={obj.color}
-        />
+        title={obj.title + " " + obj.color}
+        id={obj.id}
+        price={obj.price}
+        link={obj.link}
+        brand={obj.brand}
+        size={obj.size}
+        color={obj.color}
+      />
     ));
 
   return (
@@ -126,7 +127,7 @@ const Home: React.FC = () => {
             value={categoryId}
             onClickCategory={onClickCategory}
           />
-          <Sort value={sort}/>
+          <Sort value={sort} />
         </div>
         <h2 className="content__title">
           {categories[categoryId]} ({allGoods} товарів)

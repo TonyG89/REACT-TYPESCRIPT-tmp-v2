@@ -3,27 +3,15 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addItem } from "../../redux/slices/cartSlice";
-import { CartItem } from "../../redux/slices/cartSlice";
+import { CartItem, ItemInfo } from "../../redux/slices/types";
 
-type ClothesBlockProps = {
-  title: string;
-  id: string;
-  link: number;
-  brand: string;
-  sizes: number;
-  color: string;
-  price: number;
-  category: string;
-  rating: number;
-};
-
-const ClothesBlock: React.FC<ClothesBlockProps> = (props) => {
+const ClothesBlock: React.FC<ItemInfo> = (props) => {
   const {
     title,
     id,
-    link = 0,
+    link = "0",
     brand,
-    sizes,
+    size,
     color,
     price,
     category = "clothes",
@@ -66,24 +54,29 @@ const ClothesBlock: React.FC<ClothesBlockProps> = (props) => {
       </Link>
       <div className="clothes-block__selector">
         <ul>
-          {brand.map((type: number) => (
+          {brand.map((type,ind) => {
+            console.log("type "+type);
+            console.log(activeBrand);
+            
+            return (
             <li
-              key={type}
-              className={activeBrand === type ? "active" : ""}
-              onClick={() => setActiveBrand(type)}
+              key={ind}
+              className={activeBrand === +type ? "active" : ""}
+              onClick={() => setActiveBrand(+type)}
             >
               {typeBrand[type]}
             </li>
-          ))}
+          )}
+          )}
         </ul>
         <ul>
-          {sizes.map((size: string, index: any) => (
+          {size.map((s: string, index: any) => (
             <li
-              key={size}
+              key={index}
               className={activeSize === index ? "active" : ""}
               onClick={() => setActiveSize(index)}
             >
-              {size}
+              {s}
             </li>
           ))}
           {/* <ColorClothes/> */}

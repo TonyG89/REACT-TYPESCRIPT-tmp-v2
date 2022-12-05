@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSort, selectSort } from "../redux/slices/filterSlice";
-import {useWhyDidYouUpdate} from 'ahooks'
+import { useWhyDidYouUpdate } from "ahooks";
 
-const Sort: React.FC<{value:number} > = React.memo(({value}) => {
-  useWhyDidYouUpdate("Sort",value)
+const Sort: React.FC<{ value: any }> = React.memo(({ value }) => {
+  useWhyDidYouUpdate("Sort", value);
   const dispatch = useDispatch();
   const sortRef = useRef<HTMLDivElement>(null);
 
@@ -66,6 +66,6 @@ const Sort: React.FC<{value:number} > = React.memo(({value}) => {
       )}
     </div>
   );
-})
+});
 
 export default Sort;

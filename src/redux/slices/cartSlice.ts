@@ -1,26 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import { getCartFromLS } from '../../utils/getCartFromLS';
+import { calcTotalPrice } from '../../utils/calcTotalPrice';
+import { CartItem, CartSliceState } from './types';
 
-export type CartItem = {
-    id: string;
-    title: string;
-    link: number;
-    brand: string;
-    size: string;
-    color: string;
-    price: number;
-    count?: number;
-}
-
-interface CartSliceState {
-    totalPrice: number;
-    items: CartItem[];
-}
-
-const initialState: CartSliceState = {
-    totalPrice: 0,
-    items: []
-}
+const initialState: CartSliceState = getCartFromLS()
+console.log(initialState);
 
 const cartSlice = createSlice({
     name: 'cart',
@@ -28,32 +13,37 @@ const cartSlice = createSlice({
     reducers: {
         addItem(state, action: PayloadAction<CartItem>) {
             const findItem = state.items.find(obj => obj.id === action.payload.id && obj.size === action.payload.size && obj.brand === action.payload.brand)
+            
             if (findItem) {
                 findItem.count++
             } else {
                 state.items.push({ ...action.payload, count: 1 })
             }
-            state.totalPrice = state.items.reduce((sum, obj) => obj.price * obj.count + sum, 0)
+
+            state.totalPrice = calcTotalPrice(state.items)
         },
-        minusItem(state, action:PayloadAction<string>) {
+        minusItem(state, action: PayloadAction<string>) {
             const minusItem = state.items.find(obj => obj.id === action.payload) //payload.id
+            
             if (minusItem.count > 1) {
                 minusItem.count--
             } else {
                 const minusIndexItem = state.items.indexOf(minusItem)
                 state.items.splice(minusIndexItem, 1)
             }
-            console.log(action.payload);
             
-            state.totalPrice = state.items.reduce((sum, obj) => obj.price * obj.count + sum, 0)
+            console.log(action.payload);
+
+            state.totalPrice = calcTotalPrice(state.items)
         },
-        removeItem(state, action:PayloadAction<string>) {
+        removeItem(state, action: PayloadAction<string>) {
             state.items = state.items.filter(item => item.id !== action.payload) //payload.id
-            state.totalPrice = state.items.reduce((sum, obj) => obj.price * obj.count + sum, 0)
+            state.totalPrice = calcTotalPrice(state.items)
         },
         clearItems(state) {
             if (window.confirm("Ви впевнені, що бажаєте очистити кошик?")) {
                 state.items = []
+                localStorage.setItem("cart", JSON.stringify([]))
                 state.totalPrice = 0
             }
         }
