@@ -4,8 +4,16 @@ import { getCartFromLS } from '../../utils/getCartFromLS';
 import { calcTotalPrice } from '../../utils/calcTotalPrice';
 import { CartItem, CartSliceState } from './types';
 
-const initialState: CartSliceState = getCartFromLS()
+const {items,totalPrice} = getCartFromLS()
+
+console.log(items);
+
+const initialState: CartSliceState = {
+    totalPrice,
+    items,
+}
 console.log(initialState);
+
 
 const cartSlice = createSlice({
     name: 'cart',
@@ -13,25 +21,21 @@ const cartSlice = createSlice({
     reducers: {
         addItem(state, action: PayloadAction<CartItem>) {
             const findItem = state.items.find(obj => obj.id === action.payload.id && obj.size === action.payload.size && obj.brand === action.payload.brand)
-            
             if (findItem) {
                 findItem.count++
             } else {
                 state.items.push({ ...action.payload, count: 1 })
             }
-
             state.totalPrice = calcTotalPrice(state.items)
         },
         minusItem(state, action: PayloadAction<string>) {
             const minusItem = state.items.find(obj => obj.id === action.payload) //payload.id
-            
             if (minusItem.count > 1) {
                 minusItem.count--
             } else {
                 const minusIndexItem = state.items.indexOf(minusItem)
                 state.items.splice(minusIndexItem, 1)
             }
-            
             console.log(action.payload);
 
             state.totalPrice = calcTotalPrice(state.items)

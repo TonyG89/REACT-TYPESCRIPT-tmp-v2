@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { ClothesSliceState, Status, FetchClothesArgs, Clothes, FetchPageParams } from './types'
+import { RootState } from '../store';
 
 
 
@@ -46,7 +47,7 @@ const clothesSlice = createSlice({
     }
 })
 
-export const selectClothes = state => state.clothes
+export const selectClothes = (state: RootState) => state.clothes
 
 export const { setItems } = clothesSlice.actions
 

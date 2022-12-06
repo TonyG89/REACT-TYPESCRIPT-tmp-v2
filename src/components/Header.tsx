@@ -11,9 +11,7 @@ const Header: React.FC = () => {
   const isMounted = React.useRef(false);
 
   const sumItems = items.reduce(
-    (sum: number, item: any) => sum + item.count,
-    0
-  );
+    (sum: number, item: any) => sum + item.count,0);
 
   React.useEffect(() => {
     if (isMounted.current) {
