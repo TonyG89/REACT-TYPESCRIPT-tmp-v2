@@ -1,32 +1,52 @@
-import { Route, Routes } from 'react-router-dom';
-import './scss/app.scss';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import "./scss/app.scss";
 
-import Header from './components/Header'
-import Home from './pages/Home';
-import NotFound from './pages/NotFound';
-import Cart from './pages/Cart';
-import ClothesCard from './pages/ClothesCard'
+import Home from "./pages/Home";
 
+import NotFound from "./pages/NotFound";
+// import Cart from './pages/Cart';
+// import ClothesCard from "./pages/ClothesCard";
 // import clothes from './assets/blank_clothes.json'
 
-function App() {
+import Layout from "./components/Layout";
+import Loadable from "react-loadable";
+
+const Waiting: React.FC = () => <h4>Зачейкате... завантажується сторінка!</h4>;
+
+
+const Cart = Loadable({
+  loader: () => import(/*webpackChunkName:'Cart'*/ "./pages/Cart"),
+  loading: Waiting,
+});
+
+const ClothesCard = React.lazy(
+  () => import(/* webpackChunkName: "ClothesCard" */ "./pages/ClothesCard")
+);
+
+const App: React.FC = () => {
   return (
     <>
-      <div className="App">
-        <div className="wrapper">
-          <Header />
-          <div className="content">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/clothes/:id" element={<ClothesCard />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </div>
-        </div>
-      </div>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="" element={<Home />} />
+          <Route
+            path="cart"
+            element={
+              
+                <Cart />
+
+            }
+          />
+          <Route path="clothes/:id" element={
+          <React.Suspense fallback={<Waiting />}>
+            <ClothesCard />
+            </React.Suspense>} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
     </>
   );
-}
+};
 
 export default App;

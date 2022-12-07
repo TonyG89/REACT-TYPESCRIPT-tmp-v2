@@ -4,11 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 import qs from "qs";
 import { useNavigate, Link } from "react-router-dom";
 
-import Categories from "../components/Categories";
-import Sort from "../components/Sort";
-import ClothesBlock from "../components/ClothesBlock";
-import Skeleton from "../components/ClothesBlock/Skeleton";
-import Pagination from "../components/Pagination";
+import {
+  Categories,
+  Sort,
+  ClothesBlock,
+  Skeleton,
+  Pagination,
+} from "../components";
+
 import {
   setCategoryId,
   setPage,

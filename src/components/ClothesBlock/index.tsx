@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import ColorClothes from './ColorClothes';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { addItem } from "../../redux/slices/cartSlice";
 import { CartItem, ItemInfo } from "../../redux/slices/types";
