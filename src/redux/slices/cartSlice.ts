@@ -6,13 +6,10 @@ import { CartItem, CartSliceState } from './types';
 
 const {items,totalPrice} = getCartFromLS()
 
-console.log(items);
-
 const initialState: CartSliceState = {
     totalPrice,
     items,
 }
-console.log(initialState);
 
 
 const cartSlice = createSlice({
@@ -36,7 +33,6 @@ const cartSlice = createSlice({
                 const minusIndexItem = state.items.indexOf(minusItem)
                 state.items.splice(minusIndexItem, 1)
             }
-            console.log(action.payload);
 
             state.totalPrice = calcTotalPrice(state.items)
         },

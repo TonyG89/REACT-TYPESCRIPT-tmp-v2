@@ -9,7 +9,6 @@ const initialState: ClothesSliceState = {
     items: [],
     status: Status.LOADING
 }
-console.log(initialState);
 
 
 export const fetchClothes = createAsyncThunk('clothes/fetchClothesStatus', async (params: FetchPageParams) => {

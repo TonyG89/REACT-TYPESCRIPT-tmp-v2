@@ -54,11 +54,7 @@ const ClothesBlock: React.FC<ItemInfo> = (props) => {
       </Link>
       <div className="clothes-block__selector">
         <ul>
-          {brand.map((type,ind) => {
-            console.log("type "+type);
-            console.log(activeBrand);
-            
-            return (
+          {brand.map((type,ind) => (
             <li
               key={ind}
               className={activeBrand === +type ? "active" : ""}
@@ -66,8 +62,7 @@ const ClothesBlock: React.FC<ItemInfo> = (props) => {
             >
               {typeBrand[type]}
             </li>
-          )}
-          )}
+          ))}
         </ul>
         <ul>
           {size.map((s: string, index: any) => (

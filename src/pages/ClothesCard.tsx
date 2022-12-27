@@ -36,7 +36,6 @@ const ClothesCard: React.FC = () => {
   if (!clothes) {
     return <>Зачекайте...</>;
   }
-console.log(clothes.brand);
 
   return (
     <div className="card__block">
